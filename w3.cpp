@@ -22,8 +22,7 @@ void sha256(const std::vector<char> * pData,std::vector<char> * pDigest)
     SHA256_Update(&sha256, &((*pData)[0]), pData->size());
     SHA256_Final(hash, &sha256);
 		pDigest->clear();
-    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    {
+    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
         pDigest->push_back(hash[i]);
     }
 		assert(pDigest->size()==32);
@@ -41,6 +40,8 @@ int main(int argc, char *argv[]) {
 	myfile.open(filename,ios::binary);
 	std::vector<char> ssy;
 	char x;
+	//this is very importent in reading file content
+	//or else you will get an incorrect file length and content
 	while(myfile.read((char*)&x,1)) {
 		ssy.push_back(x);
 	}
@@ -50,14 +51,20 @@ int main(int argc, char *argv[]) {
 	std::vector<char> digest;
 	cout<<dec<<"ssy size "<<ssy.size()<<endl;
 	cout<<dec<<"last 1K start addr "<<ssy.size()/1024*1024<<endl;
+	
+	//extracting the last block with less than 1K
 	for(long i = ssy.size()/1024*1024 ; i < ssy.size() ;i++) {tmp1.push_back(ssy[i]);}
+	//computing the value digest for it
 	sha256(&tmp1,&digest);
 
 	// then backword computing to the first block
 	for(long startAddr=ssy.size()/1024*1024-1024;startAddr>=0;startAddr=startAddr-1024) {
 		std::vector<char> tmp;
+		//extracting the 1K block
 		for(long i = startAddr ; i < startAddr + 1024 ;i++) {tmp.push_back(ssy[i]);}
+		//appending the old digest
 		for(long i = 0 ; i < digest.size() ; i++) {tmp.push_back(digest[i]);}
+		//computing the next digest
 		sha256(&tmp,&digest);
 	}
 
@@ -68,17 +75,6 @@ int main(int argc, char *argv[]) {
 	}
 	cout<<dec<<endl;
 
-/*	std::vector<char>tmp11;
-	char x1[]="1234567890_1";	
-	for(long i=0;i<sizeof(x1);i++) {tmp11.push_back(x1[i]);}
-	sha256(&tmp11,&digest) ;
-	cout<<"final res is "<<endl;
-	for(long i=0;i<32;i++) {
-		cout<<hex<<setw(2)<<setfill('0')<<char2ui(digest[i])<<endl;
-		cout<<dec;
-	}
-	cout<<dec;
-*/
 	return 1;
 }
 

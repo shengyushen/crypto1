@@ -1,12 +1,12 @@
 OBJS = \
-usingsha256.o 
+w3.o 
 
-LINKTARGET = usingsha256.exe
+LINKTARGET = w3.exe
 
 all : $(LINKTARGET)
 
 clean :
-	rm -f *.o *.exe
+	rm -f *.o *.exe *.stackdump
 
 $(LINKTARGET) : $(OBJS)
 	g++ -o $@ $^ -lcrypto 
