@@ -14,6 +14,7 @@ unsigned int char2ui(char c) {
 	unsigned int uc= (unsigned int)c;
 	return uc-uc/256*256;
 }
+
 void sha256(const std::vector<char> * pData,std::vector<char> * pDigest)
 {
     unsigned char hash[SHA256_DIGEST_LENGTH];
