@@ -9,7 +9,7 @@ clean :
 	rm -f *.o *.exe
 
 $(LINKTARGET) : $(OBJS)
-	g++ -o $@ $^ libcryptopp.a
+	g++ -o $@ $^ -lcrypto 
 
 %.o : %cpp
 	g++ -o $@ -c $<
