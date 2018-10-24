@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 import binascii
 import string
 MSGS = [ 
@@ -37,7 +37,7 @@ for x in MSGS:
   prec = 3
   for s in range(len(possible_space)):
     if possible_space[s] < len(MSGS)-prec:continue
-    key[s] = x[s] ^ 0x20
+    key[s] = a[s] ^ 0x20
 
 print(bxor(MSGS[-1],key))
 

@@ -1,17 +1,14 @@
-OBJS = \
-w3.o 
-
-LINKTARGET = w3.exe
+LINKTARGET = w3.exe w21.exe
 
 all : $(LINKTARGET)
 
 clean :
 	rm -f *.o *.exe *.stackdump
 
-$(LINKTARGET) : $(OBJS)
+%.exe : %.o
 	g++ -o $@ $^ -lcrypto 
 
-%.o : %cpp
+%.o : %.cpp
 	g++ -o $@ -c $<
 
 
