@@ -79,7 +79,13 @@ int main(int argc, char *argv[]) {
 	printf("ct in hex : \n");
 	printShortArray(pctus);
 
-	
+	AES_KEY aeskey;
+	AES_set_decrypt_key(pkeyus->pArray,(pkeyus-lLength)*8,&aeskey);
+
+	for(long i=16;i<64;i=i+16) {
+		unsigned char dres[16];
+		AES_decrypt()
+	}
 }
 
 
