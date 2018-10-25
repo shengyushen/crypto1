@@ -127,7 +127,7 @@ void ctr_aes(uchar * ct, uchar* key) {
 	chars2uis(key,keyui,strlen((char*)key));
 	// key bits so need to *8
 	AES_KEY aeskey;
-	AES_set_decrypt_key(keyui,KEYSIZE*8,&aeskey);
+	AES_set_encrypt_key(keyui,KEYSIZE*8,&aeskey);
 	
 	uchar ivi[MAXSIZE];
 	strncpy((char*)ivi,(char*)ctui,KEYSIZE);
@@ -136,12 +136,12 @@ void ctr_aes(uchar * ct, uchar* key) {
 	uchar fui[MAXSIZE];
 	//although each key and frame is 16byte, each byte need two char to represented, so we need to move at 32 byte
 	for(long i=0;i<(int)strlen((char*)ct)/2-KEYSIZE;i=i+KEYSIZE) {
-		AES_decrypt(ivi,fui+i,&aeskey);
-		printf("input\n");
-		dispuis(ivi,KEYSIZE);
+		AES_encrypt(ivi,fui+i,&aeskey);
+		//printf("input\n");
+		//dispuis(ivi,KEYSIZE);
 		stradd1(ivi,ivi,KEYSIZE);
-		printf("output\n");
-		dispuis(ivi,KEYSIZE);
+		//printf("output\n");
+		//dispuis(ivi,KEYSIZE);
 	}
 	uchar finalres[MAXSIZE] ;
 	strxor(ctui+KEYSIZE,fui,finalres,(int)strlen((char*)ct)/2-KEYSIZE);
