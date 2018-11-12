@@ -1,4 +1,4 @@
-LINKTARGET = w3.exe w21.exe w5.exe
+LINKTARGET = w3.exe w21.exe w5.exe w61.exe
 
 all : $(LINKTARGET)
 
